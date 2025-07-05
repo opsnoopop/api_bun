@@ -1,0 +1,26 @@
+services:
+  bun:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: oven/bun:1_custom
+    container_name: container_oven_bun
+    ports:
+      - "3001:3000"
+    depends_on:
+      - mysql
+    env_file:
+      - .env
+
+  mysql:
+    image: mysql:8.4.5
+    container_name: container_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
