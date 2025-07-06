@@ -2,15 +2,21 @@
 
 A simple Bun API application and MySQL, containerized with Docker.
 
+
 ## Technology Stack
 
 **Bun Container: FROM oven/bun:1**
+- OS Debian GNU/Linux: 12
 - Bun: 1.2.16
 - MySQL2: 3.14.1
-- Debian GNU/Linux 12 (bookworm)
 
 **MySQL Container: FROM mysql:8.4.5**
+- OS Oracle Linux Server: 9.6
 - MySQL: 8.4.5
+
+**grafana/k6 Container: FROM grafana/k6:1.1.0**
+- OS Alpine Linux: 3.22.0
+- grafana/k6: 1.1.0
 
 
 ## Getting Started
@@ -84,6 +90,55 @@ CREATE TABLE testdb.users (
   "username":"optest",
   "email":"auttakorn.w@clicknext.com"
 }
+```
+
+
+## Test Performance by grafana/k6
+
+### grafana/k6 test Health Check
+```bash
+docker run \
+--name container_k6 \
+--rm \
+-it \
+--network global_bun \
+-v ./k6/:/k6/ \
+grafana/k6:1.1.0 \
+run /k6/k6_bun_health_check.js
+```
+
+### grafana/k6 test Insert Create user
+```bash
+docker run \
+--name container_k6 \
+--rm \
+-it \
+--network global_bun \
+-v ./k6/:/k6/ \
+grafana/k6:1.1.0 \
+run /k6/k6_bun_create_user.js
+```
+
+### grafana/k6 test Select Get user by id
+```bash
+docker run \
+--name container_k6 \
+--rm \
+-it \
+--network global_bun \
+-v ./k6/:/k6/ \
+grafana/k6:1.1.0 \
+run /k6/k6_bun_get_user_by_id.js
+```
+
+### check entrypoint grafana/k6
+```bash
+docker run \
+--name container_k6 \
+--rm \
+-it \
+--entrypoint \
+/bin/sh grafana/k6:1.1.0
 ```
 
 
