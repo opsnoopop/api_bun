@@ -6,8 +6,8 @@ A simple Bun API application and MySQL, containerized with Docker.
 ## Technology Stack
 
 **Bun Container: FROM oven/bun:1**
-- OS Debian GNU/Linux: 12
-- Bun: 1.2.16
+- OS Alpine Linux 3.20.6
+- Bun: 1.2.18
 - MySQL2: 3.14.1
 
 **MySQL Container: FROM mysql:8.4.5**

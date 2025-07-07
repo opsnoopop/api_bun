@@ -3,7 +3,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    image: oven/bun:1_custom
+    image: oven/bun:1-alpine_custom
     container_name: container_bun
     ports:
       - "3001:3000"
